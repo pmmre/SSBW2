@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pruebas</title>
+    </head>
+
+    <body>
+        <h1>Rango says..hello world!</h1>
+
+        {% if categories %}
+            <ul>
+                {% for category in categories %}
+                <!-- Following line changed to add an HTML hyperlink -->
+                <li><a href="/pruebas/category/{{ category.slug }}">{{ category.name }}</a>
+                   <form method="get" action="">
+                        <input type="hidden" name="id" value= {{ category.name }} />
+                     <input type="submit" value="Eliminar" />
+                   </from>
+                  <button type="submit" action="/pruebas/add_category"> Eliminar </button></li>
+
+                  <button id="Megusta" class="Megusta" value= {{ category.name }}> Me gusta </button>
+                {% endfor %}
+            </ul>
+       {% else %}
+            <strong>There are no categories present.</strong>
+       {% endif %}
+
+       <a href="/pruebas/add_category/">Add a New Category</a><br />
+
+    </body>
+</html>
