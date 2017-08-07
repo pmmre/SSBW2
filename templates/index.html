@@ -1,0 +1,34 @@
+
+
+
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% block content %}
+    <h1>¡Hola Mundo! (con plantilla)</h1>
+    <img src="{% static "img/granada.jpg" %}" / >
+    <img src="/static/img/granada.jpg" / >
+
+    <p> <b> Ver que continene la imagen  -_> </b> {{STATIC_URL}} </p>
+
+    <p> Que pasa tron!!</p>
+
+    {% if categories %}
+    <ul>
+        {% for category in categories %}
+        <li>{{ category.name }}  ---- >  {{category.address.street}}</li>
+        <li> {{ category.restaurant_id }} </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <strong>There are no categories present.</strong>
+{% endif %}
+
+
+    <a href="/restaurantes/test"> pasar a google</a>
+
+
+    {% block contenido %}
+
+    {% endblock %}
+
+{% endblock %}

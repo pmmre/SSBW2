@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+<<<<<<< HEAD
         <title>Pruebas</title>
     </head>
 
@@ -18,5 +19,25 @@
             <strong>There are no categories present.</strong>
        {% endif %}
 
+=======
+        <title>Rango</title>
+    </head>
+
+    <body>
+        {% if category %}
+        <h1>{{ category_name }}</h1>
+            {% if pages %}
+            <ul>
+                {% for page in pages %}
+                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>No pages currently in category.</strong>
+            {% endif %}
+        {% else %}
+            The specified category {{ category_name }} does not exist!
+        {% endif %}
+>>>>>>> 63101479a5bcbdca4b5cbbc5277f51e7b2d4038a
     </body>
 </html>

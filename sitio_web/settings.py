@@ -25,7 +25,11 @@ SECRET_KEY = 'mem(wi4y9ax0fex1-!s^s463oj3dj4c*7(c+!ex9kt$7p%nr_z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = ['192.168.127.130', 'localhost', '127.0.0.1','0.0.0.0']
+=======
+ALLOWED_HOSTS = ['192.168.127.128', 'localhost', '127.0.0.1']
+>>>>>>> 63101479a5bcbdca4b5cbbc5277f51e7b2d4038a
 
 
 # Application definition
@@ -38,7 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'restaurantes',
+<<<<<<< HEAD
     'registration'
+=======
+    'rango',
+    'pruebas'
+>>>>>>> 63101479a5bcbdca4b5cbbc5277f51e7b2d4038a
 ]
 
 MIDDLEWARE = [
@@ -126,6 +135,7 @@ STATIC_URL = '/static/'
 REGISTRATION_OPEN = True                # If True, users can register
 ACCOUNT_ACTIVATION_DAYS = 7     # One-week activation window; you may, of course, use a different value.
 REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged in.
+<<<<<<< HEAD
 LOGIN_REDIRECT_URL = '/restaurantes/'  # The page you want users to arrive at after they successful log in
 LOGIN_URL = '/accounts/login/'  # The page users are directed to if they are not logged in,
                                                                 # and are trying to access pages requiring authentication
@@ -178,3 +188,8 @@ LOGGING = {
         },
     }
 }
+=======
+LOGIN_REDIRECT_URL = '/rango/'  # The page you want users to arrive at after they successful log in
+LOGIN_URL = '/accounts/login/'  # The page users are directed to if they are not logged in,
+                                                                # and are trying to access pages requiring authentication
+>>>>>>> 63101479a5bcbdca4b5cbbc5277f51e7b2d4038a
