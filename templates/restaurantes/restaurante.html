@@ -5,8 +5,12 @@
 
 
 {% if resta.photo %}
-  <img class="restaurant-photo" src="{% static 'img/restaurants/'|add:photo|add:'.jpg' %}" alt="Foto del restaurante {{ resta.name }}">
+  <p> Es el if </p>
+  {{category.photo}}
+  <img class="restaurant-photo" src="{% static 'img/restaurantes/'|add:photo|add:'.jpg' %}" alt="Foto del restaurante {{ resta.name }}">
 {% else %}
+  <p> Es el else </p>
+  {{category.photo}}
   <img class="restaurant-photo" src="{% static 'img/granada.jpg' %}" alt="Foto del restaurante {{ resta.name }}">
 {% endif %}
 

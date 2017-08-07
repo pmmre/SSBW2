@@ -20,10 +20,8 @@ urlpatterns = [
     url(r'^restaurantes/', include('restaurantes.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('registration.backends.simple.urls')),
-<<<<<<< HEAD
-=======
-    url(r'^rango/', include('rango.urls')),
-    url(r'^pruebas/', include('pruebas.urls')),
->>>>>>> 63101479a5bcbdca4b5cbbc5277f51e7b2d4038a
+#    url(r'^rango/', include('rango.urls')),
+#    url(r'^pruebas/', include('pruebas.urls')),
+
 
 ]

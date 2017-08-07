@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from django.shortcuts import render,redirect
 from .models import *
 from .forms import RestaurantForm
@@ -6,30 +5,17 @@ from django.shortcuts import render, HttpResponse
 
 import datetime
 import logging
+import os, os.path
+
+def handle_uploaded_file(n, f):
+    with open('static/img/restaurants/' + str(n) + '.jpg', 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
 
 logger = logging.getLogger(__name__)
 
 def index(request):
-    print("hola")
-    print("hola2")
     logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la página de inicio")
-    print("hola2")
-=======
-from django.shortcuts import render
-from .models import addr, restaurants
-
-# Create your views here.
-
-from django.shortcuts import render, HttpResponse
-
-#from .forms import restaurantes
-
-# Create your views here.
-
-
-
-def index(request):
->>>>>>> 63101479a5bcbdca4b5cbbc5277f51e7b2d4038a
     category_list = restaurants.objects.order_by('-name')[:5]
     #ultimosRestaurants = list(reversed(
     #restaurants.objects[len(restaurants.objects) - 25:len(restaurants.objects)]))
@@ -37,11 +23,9 @@ def index(request):
     #    'resta': ultimosRestaurants,
     #}
     #category_list = Category.objects().order_by('-name')
-<<<<<<< HEAD
-    print("hola3")
+
     context = {'categories': category_list,
     "menu": "index"}   # Aquí van la las variables para la plantilla
-    print("hola4")
 
     return render(request,'restaurantes/index.html', context)
 
@@ -60,7 +44,11 @@ def index2(request):
 
 def restaurantes(request):
     logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la página de restaurantes")
-    category_list = restaurants.objects.order_by('name')[:300]
+    print(len([name for name in os.listdir('static/img/restaurants/') ]))
+    print("numero de elementos")
+    print(restaurants.objects.count())
+    category_list = restaurants.objects.order_by('name')[140:1000]
+
     #print(restaurants.objects(restaurant_id='41702705')[0])
     context = {'categories': category_list,
     "menu": "restaurantes"
@@ -69,8 +57,13 @@ def restaurantes(request):
     return render(request,'restaurantes/restaurantes.html', context)
 
 def restaurante(request,id_rest):
+
     logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la página del resurante "+id_rest)
+    print(id_rest)
     r = restaurants.objects.get(restaurant_id=id_rest)
+    print("hello")
+    print(r.photo)
+    print("Adios")
     context_dict = {
         'category': r,
         "photo": str(r.restaurant_id),
@@ -96,7 +89,7 @@ def add(request):
         form = RestaurantForm(request.POST, request.FILES)
         if form.is_valid():
             if len(request.FILES) != 0:
-                handle_uploaded_file(restaurants.objects.count() + 1, request.FILES['photo'])
+                handle_uploaded_file(len([name for name in os.listdir('static/img/restaurants/') ]) + 1, request.FILES['photo'])
             r = form.save()
             return render(request, 'restaurantes/index.html')
     else:
@@ -113,34 +106,8 @@ def delete(request):
     logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la página de inicio")
     id_rest = request.GET["id"]
     restaurants.objects.filter(restaurant_id=id_rest).delete()
-    return render(request, 'restaurantes/index.html')
-=======
-    context = {'categories': category_list}   # Aquí van la las variables para la plantilla
+    return render(request, 'restaurantes/restaurantes.html')
 
-    return render(request,'index.html', context)
-
-def test(request):
-    context = {}   # Aquí van la las variables para la plantilla
-    return render(request,'test.html', context)
-
-def index2(request):
-    category_list = Category.objects.order_by('-name')[:5]
-
-    #category_list = Category.objects().order_by('-name')
-    context = {'categories': category_list}   # Aquí van la las variables para la plantilla
-
-    return render(request,'index.html', context)
-
-
-def base(request):
-    context = {}   # Aquí van la las variables para la plantilla
-    return render(request,'base.html', context)
-
-
-def restaurantes(request):
-    context = {}   # Aquí van la las variables para la plantilla
-    return render(request,'restaurantes.html', context)
->>>>>>> 63101479a5bcbdca4b5cbbc5277f51e7b2d4038a
 
 
 #def index(request):

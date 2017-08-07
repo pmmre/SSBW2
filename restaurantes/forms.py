@@ -10,7 +10,7 @@ class RestaurantForm(forms.Form):
     city    = forms.CharField(required=True, label='Ciudad', widget=forms.TextInput(attrs={'placeholder': 'Granada'}))
     cuisine = forms.CharField(required=True, label='Tipo de cocina', widget=forms.TextInput(attrs={'placeholder': 'Italiana'}))
     borough = forms.CharField(required=True, label='Barrio', widget=forms.TextInput(attrs={'placeholder': 'La Chana'}))
-    #photo   = forms.FileField(required=False, label='Foto')
+    photo   = forms.FileField(required=False, label='Foto')
 
     def save(self, commit=True):
         #api_base_url = 'http://maps.googleapis.com/maps/api/geocode/xml?address='
@@ -36,10 +36,40 @@ class RestaurantForm(forms.Form):
         r.cuisine = self.cleaned_data['cuisine']
         r.borough = self.cleaned_data['borough']
         #r.address = a
+        print("Dentro del forms")
+        salida = False
+        valido=False
+        numero = "0"
+        try:
+            x = restaurants.objects.get(restaurant_id=r.restaurant_id)
 
-        #if self.cleaned_data['photo']:
-        #    restaurant_photo = open('static/img/restaurants/' + str(restaurants.objects.count() + 1) + '.jpg', 'rb')
-    #        r.photo.put(restaurant_photo, content_type = 'image/jpeg')
+        except restaurants.DoesNotExist:
+            print("Id no obtenido")
+            salida=True
+            valido=True
+            numero=r.restaurant_id
+
+
+        while salida ==False:
+            try:
+                x = restaurants.objects.get(restaurant_id=numero)
+            except restaurants.DoesNotExist:
+                print("Id no obtenido")
+                salida=True
+            numero = str(int(numero)+1)
+
+        #n = 1
+        print(numero)
+        if valido==False:
+            r.restaurant_id=numero
+        print(r.restaurant_id)
+        #while n<5:
+        #    print("hola")
+        #    n=n+1
+
+        if self.cleaned_data['photo']:
+            restaurant_photo = open('static/img/restaurants/' + str(len([name for name in os.listdir('static/img/restaurants/') ])) + '.jpg', 'rb')
+            r.photo.put(restaurant_photo, content_type = 'image/jpeg')
 
         if commit:
             r.save()

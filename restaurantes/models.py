@@ -1,9 +1,7 @@
 from django.db import models
 from mongoengine import *
-<<<<<<< HEAD
 from django.template.defaultfilters import slugify
-=======
->>>>>>> 63101479a5bcbdca4b5cbbc5277f51e7b2d4038a
+import os, os.path
 
 # Conectarse a la BD
 connect('test', host='192.168.127.129', port=27017)
@@ -24,16 +22,10 @@ class likes(EmbeddedDocument):
 
 class restaurants(Document):
     name             = StringField(required=True, max_length=80)
-<<<<<<< HEAD
     restaurant_id    = StringField()
-=======
-    restaurant_id    = IntField()
->>>>>>> 63101479a5bcbdca4b5cbbc5277f51e7b2d4038a
+    #restaurant_id    = IntField()
     cuisine          = StringField()
     borough          = StringField()
     address          = EmbeddedDocumentField(addr)              # en la misma collección
     grades           = ListField(EmbeddedDocumentField(likes))
-<<<<<<< HEAD
     photo            = FileField()
-=======
->>>>>>> 63101479a5bcbdca4b5cbbc5277f51e7b2d4038a

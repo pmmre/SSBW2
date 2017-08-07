@@ -1,37 +1,6 @@
-[07/Aug/2017 11:08:03] INFO [restaurantes.views:14] 2017-08-07 11:08:03 - se ha consultado la página de inicio
-[07/Aug/2017 11:08:40] INFO [restaurantes.views:44] 2017-08-07 11:08:40 - se ha consultado la página de restaurantes
-[07/Aug/2017 11:08:42] INFO [restaurantes.views:76] 2017-08-07 11:08:42 - se ha consultado la página de add restaurante
-[07/Aug/2017 11:08:55] INFO [restaurantes.views:76] 2017-08-07 11:08:55 - se ha consultado la página de add restaurante
-[07/Aug/2017 11:08:55] ERROR [django.request:124] Internal Server Error: /restaurantes/add/
-Traceback (most recent call last):
-  File "/home/pablo/SSBW/lib/python3.5/site-packages/mongoengine/document.py", line 340, in save
-    object_id = self._save_create(doc, force_insert, write_concern)
-  File "/home/pablo/SSBW/lib/python3.5/site-packages/mongoengine/document.py", line 396, in _save_create
-    object_id = collection.save(doc, **write_concern)
-  File "/home/pablo/SSBW/lib/python3.5/site-packages/pymongo/collection.py", line 2445, in save
-    check_keys, manipulate, write_concern)
-  File "/home/pablo/SSBW/lib/python3.5/site-packages/pymongo/collection.py", line 562, in _insert
-    check_keys, manipulate, write_concern, op_id, bypass_doc_val)
-  File "/home/pablo/SSBW/lib/python3.5/site-packages/pymongo/collection.py", line 544, in _insert_one
-    _check_write_command_response([(0, result)])
-  File "/home/pablo/SSBW/lib/python3.5/site-packages/pymongo/helpers.py", line 314, in _check_write_command_response
-    raise DuplicateKeyError(error.get("errmsg"), 11000, error)
-pymongo.errors.DuplicateKeyError: E11000 duplicate key error collection: test.restaurants index: restaurant_id_1 dup key: { : "25368" }
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/home/pablo/SSBW/lib/python3.5/site-packages/django/core/handlers/exception.py", line 39, in inner
-    response = get_response(request)
-  File "/home/pablo/SSBW/lib/python3.5/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/home/pablo/SSBW/lib/python3.5/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/home/pablo/SSBW/sitio_web/restaurantes/views.py", line 82, in add
-    r = form.save()
-  File "/home/pablo/SSBW/sitio_web/restaurantes/forms.py", line 45, in save
-    r.save()
-  File "/home/pablo/SSBW/lib/python3.5/site-packages/mongoengine/document.py", line 363, in save
-    raise NotUniqueError(message % six.text_type(err))
-mongoengine.errors.NotUniqueError: Tried to save duplicate unique keys (E11000 duplicate key error collection: test.restaurants index: restaurant_id_1 dup key: { : "25368" })
-[07/Aug/2017 11:08:55] ERROR [django.server:131] "POST /restaurantes/add/ HTTP/1.1" 500 111980
+[07/Aug/2017 16:17:04] INFO [restaurantes.views:87] 2017-08-07 16:17:04 - se ha consultado la página de add restaurante
+[07/Aug/2017 16:17:05] INFO [restaurantes.views:46] 2017-08-07 16:17:05 - se ha consultado la página de restaurantes
+[07/Aug/2017 16:17:09] INFO [restaurantes.views:61] 2017-08-07 16:17:09 - se ha consultado la página del resurante 25366
+[07/Aug/2017 16:19:02] INFO [restaurantes.views:46] 2017-08-07 16:19:02 - se ha consultado la página de restaurantes
+[07/Aug/2017 16:19:05] INFO [restaurantes.views:61] 2017-08-07 16:19:05 - se ha consultado la página del resurante 25366
+[07/Aug/2017 16:19:08] INFO [restaurantes.views:61] 2017-08-07 16:19:08 - se ha consultado la página del resurante 1
