@@ -20,7 +20,5 @@ urlpatterns = [
     url(r'^restaurantes/', include('restaurantes.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('registration.backends.simple.urls')),
-    url(r'^rango/', include('rango.urls')),
-    url(r'^pruebas/', include('pruebas.urls')),
 
 ]

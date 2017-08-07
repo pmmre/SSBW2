@@ -1,5 +1,6 @@
 from django.db import models
 from mongoengine import *
+from django.template.defaultfilters import slugify
 
 # Conectarse a la BD
 connect('test', host='192.168.127.129', port=27017)
@@ -20,8 +21,9 @@ class likes(EmbeddedDocument):
 
 class restaurants(Document):
     name             = StringField(required=True, max_length=80)
-    restaurant_id    = IntField()
+    restaurant_id    = StringField()
     cuisine          = StringField()
     borough          = StringField()
     address          = EmbeddedDocumentField(addr)              # en la misma collección
     grades           = ListField(EmbeddedDocumentField(likes))
+    photo            = FileField()

@@ -1,0 +1,53 @@
+
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% block content %}
+    <h1>¡Hola Mundo! (con plantilla)</h1>
+    <img src="{% static "img/granada.jpg" %}" / >
+    <img src="/static/img/granada.jpg" / >
+
+    <p> <b> Ver que continene la imagen  -_> </b> {{STATIC_URL}} </p>
+
+    <p> Que pasa tron!!</p>
+
+    {% if categories %}
+    <ul>
+        {% for category in categories %}
+        <li> <p><b> nombre : </b> {{ category.name }} &nbsp; &nbsp;
+              <b> id : </b> {{ category.restaurant_id }} &nbsp; &nbsp;
+              <b> cocina : </b> {{ category.cuisine }} &nbsp; &nbsp;
+              <b> Ciudad : </b> {{ category.borough }} &nbsp; &nbsp; </p>
+
+              <b> Edificio : </b> {{category.address.building}} &nbsp; &nbsp;
+              <b> Calle : </b> {{category.address.street}} &nbsp; &nbsp;
+              <b> Ciudad : </b> {{category.address.city}} &nbsp; &nbsp;
+              <b> zipcode : </b> {{category.address.zipcode}} &nbsp; &nbsp;
+              <b> coord : </b> {{category.address.coord}} &nbsp; &nbsp;
+              <br></br>
+              {% for like in category.grades %}
+                <p>
+                  <b> grade : </b> {{like.grade}} &nbsp; &nbsp;
+                  <b> score : </b> {{like.score}} &nbsp; &nbsp;
+                  <b> date : </b> {{like.date}} &nbsp; &nbsp;
+                </p>
+              {% endfor %}
+              <br></br>
+              <br></br>
+
+
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <strong>There are no categories present.</strong>
+{% endif %}
+
+
+    <a href="/restaurantes/test"> pasar a google</a>
+
+
+    {% block contenido %}
+
+    {% endblock %}
+
+{% endblock %}

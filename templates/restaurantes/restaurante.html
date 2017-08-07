@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% block content %}
+    <h1>{{ category.name }}</h1>
+
+
+{% if resta.photo %}
+  <img class="restaurant-photo" src="{% static 'img/restaurants/'|add:photo|add:'.jpg' %}" alt="Foto del restaurante {{ resta.name }}">
+{% else %}
+  <img class="restaurant-photo" src="{% static 'img/granada.jpg' %}" alt="Foto del restaurante {{ resta.name }}">
+{% endif %}
+
+     <p>
+          <b> cocina : </b> {{ category.cuisine }} &nbsp; &nbsp;
+          <b> Ciudad : </b> {{ category.borough }} &nbsp; &nbsp; </p>
+
+          <b> Edificio : </b> {{category.address.building}} &nbsp; &nbsp;
+          <b> Calle : </b> {{category.address.street}} &nbsp; &nbsp;
+          <b> Ciudad : </b> {{category.address.city}} &nbsp; &nbsp;
+          <b> zipcode : </b> {{category.address.zipcode}} &nbsp; &nbsp;
+          <b> coord : </b> {{category.address.coord}} &nbsp; &nbsp;
+          <br></br>
+          {% for like in category.grades %}
+            <p>
+              <b> grade : </b> {{like.grade}} &nbsp; &nbsp;
+              <b> score : </b> {{like.score}} &nbsp; &nbsp;
+              <b> date : </b> {{like.date}} &nbsp; &nbsp;
+            </p>
+          {% endfor %}
+          <br></br>
+          <br></br>
+
+
+
+
+
+
+
+     {% block contentJavascript %}
+
+     <div id="map"></div>
+      <script>
+        function initMap() {
+          var uluru = {lat: -25.363, lng: 131.044};
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4,
+            center: uluru
+          });
+          var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+          });
+        }
+      </script>
+      <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAckMh2a2vYHt9ffwZHSKAostZ6qhIpvQ&callback=initMap">
+      </script>
+     {% endblock %}
+
+{% endblock %}

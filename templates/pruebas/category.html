@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Rango</title>
+        <title>Pruebas</title>
     </head>
 
     <body>
-        {% if category %}
-        <h1>{{ category_name }}</h1>
-            {% if pages %}
+        <h1>Rango says..hello world!</h1>
+
+        {% if categories %}
             <ul>
-                {% for page in pages %}
-                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                {% for category in categories %}
+                <!-- Following line changed to add an HTML hyperlink -->
+                <li><a href="/rango/category/{{ category.slug }}">{{ category.name }}</a></li>
                 {% endfor %}
             </ul>
-            {% else %}
-                <strong>No pages currently in category.</strong>
-            {% endif %}
-        {% else %}
-            The specified category {{ category_name }} does not exist!
-        {% endif %}
+       {% else %}
+            <strong>There are no categories present.</strong>
+       {% endif %}
+
     </body>
 </html>

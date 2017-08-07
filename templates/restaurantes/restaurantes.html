@@ -1,9 +1,9 @@
-
-
-
 {% extends "base.html" %}
 {% load static from staticfiles %}
 {% block content %}
+    <h1>Sección de restaurantes </h1>
+
+
     <h1>¡Hola Mundo! (con plantilla)</h1>
     <img src="{% static "img/granada.jpg" %}" / >
     <img src="/static/img/granada.jpg" / >
@@ -15,8 +15,14 @@
     {% if categories %}
     <ul>
         {% for category in categories %}
-        <li>{{ category.name }}  ---- >  {{category.address.street}}</li>
-        <li> {{ category.restaurant_id }} </li>
+        <form action="{% url 'delete' %}" method="get">
+        <a href="/restaurantes/restaurante/{{ category.restaurant_id }}">{{ category.name }}  </a>
+        {{category.restaurant_id}}
+
+            <input type='hidden' name='id' value={{category.restaurant_id}}>
+            <button type="submit" class="btn btn-primary"> Eliminar </button>
+        </form>
+
         {% endfor %}
     </ul>
 {% else %}

@@ -7,6 +7,22 @@ $(document).ready(function() {
 /*menu = '{{menu}}'
 
 $()*/
+/*
+var str1 = "#";
+var str2 = "{{ menu }}";
+var res = str1.concat(str2);
+$(str1).addClass("active");
+*/
+/*
+  var menuOption = "{{ menu }}";
+  if (menuOption === "index") {
+    $("#index").addClass("active");
+  } else if (menuOption === "restaurantes") {
+    $("#restaurantes").addClass("active");
+  }
+*/
+
+
 
 $(".Megusta").click(function(){
 	identificado = $(this).attr("id")
