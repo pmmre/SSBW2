@@ -4,15 +4,15 @@ from django.template.defaultfilters import slugify
 import os, os.path
 
 # Conectarse a la BD
-connect('test', host='192.168.127.129', port=27017)
+connect('test', host='192.168.127.133', port=27017)
 
 
 class addr(EmbeddedDocument):
     building = StringField()
     street   = StringField()
-    city     = StringField()   # añadido
+    city     = StringField()   # anaadido
     zipcode  = IntField()
-    coord    = GeoPointField() # OJO, al BD de test estan a revés
+    coord    = GeoPointField() # OJO, al BD de test estan a reves
                                # [long, lat] en vez de [lat, long]
 
 class likes(EmbeddedDocument):
@@ -26,6 +26,6 @@ class restaurants(Document):
     #restaurant_id    = IntField()
     cuisine          = StringField()
     borough          = StringField()
-    address          = EmbeddedDocumentField(addr)              # en la misma collección
+    address          = EmbeddedDocumentField(addr)              # en la misma colleccion
     grades           = ListField(EmbeddedDocumentField(likes))
-    photo            = FileField()
+    photo            = StringField()                                 #ImageField()

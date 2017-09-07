@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from .models import *
 from .forms import RestaurantForm
 from django.shortcuts import render, HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 import datetime
 import logging
@@ -64,15 +66,16 @@ def restaurante(request,id_rest):
     print("hello")
     print(r.photo)
     print("Adios")
+
     context_dict = {
         'category': r,
-        "photo": str(r.restaurant_id),
+        "photo": r.photo,
         "menu": "restaurante"
     }
 
     return render(request, 'restaurantes/restaurante.html', context_dict)
 
-
+# "photo": str(r.restaurant_id),
 
 def restaurant(request, id):
     logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la página del resurante "+id)
@@ -83,12 +86,15 @@ def restaurant(request, id):
     }
     return render(request, 'restaurantes/restaurant.html', context)
 
+@login_required
 def add(request):
     logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la página de add restaurante")
     if request.method == "POST":
         form = RestaurantForm(request.POST, request.FILES)
         if form.is_valid():
             if len(request.FILES) != 0:
+                print("Che2")
+                #print(r.restaurant_id)
                 handle_uploaded_file(len([name for name in os.listdir('static/img/restaurants/') ]) + 1, request.FILES['photo'])
             r = form.save()
             return render(request, 'restaurantes/index.html')
@@ -101,13 +107,31 @@ def add(request):
     }
     return render(request, 'restaurantes/add.html', context)
 
-
+@login_required
 def delete(request):
     logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la página de inicio")
     id_rest = request.GET["id"]
     restaurants.objects.filter(restaurant_id=id_rest).delete()
+    print("vete a inicio")
     return render(request, 'restaurantes/restaurantes.html')
 
+
+def number_of_restaurants(request):
+    n = restaurants.objects.count()
+    return JsonResponse({'n': n})
+
+def latitud_longitud(request):
+
+    id_rest = request.GET['eo']
+    print(id_rest)
+    r = restaurants.objects.get(restaurant_id=id_rest)
+    print(r)
+    print("antes")
+    print(r.address.coord)
+
+
+
+    return JsonResponse({'n': r.address.coord})
 
 
 #def index(request):

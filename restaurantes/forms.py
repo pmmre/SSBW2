@@ -13,23 +13,25 @@ class RestaurantForm(forms.Form):
     photo   = forms.FileField(required=False, label='Foto')
 
     def save(self, commit=True):
-        #api_base_url = 'http://maps.googleapis.com/maps/api/geocode/xml?address='
-        #req = api_base_url + self.cleaned_data['name'] + self.cleaned_data['city']
+        api_base_url = 'http://maps.googleapis.com/maps/api/geocode/xml?address='
+        req = api_base_url + self.cleaned_data['name'] + self.cleaned_data['city']
 
-        #tree = etree.parse(req)
+        tree = etree.parse(req)
 
-        #addressXML = tree.xpath('//address_component')
-        #locationXML = tree.xpath('//location')
+        addressXML = tree.xpath('//address_component')
+        locationXML = tree.xpath('//location')
 
-        #buildingXML = addressXML[0].xpath('//long_name/text()')[0]
-        #streetXML = addressXML[1].xpath('//long_name/text()')[1]
-        #cityXML = addressXML[2].xpath('//long_name/text()')[2]
-        #zipcodeXML = int(addressXML[6].xpath('//long_name/text()')[6])
-        #coordXML = [float(locationXML[0].xpath('//lat/text()')[0]), float(locationXML[0].xpath('//lng/text()')[0])]
+        buildingXML = addressXML[0].xpath('//long_name/text()')[0]
+        streetXML = addressXML[1].xpath('//long_name/text()')[1]
+        cityXML = addressXML[2].xpath('//long_name/text()')[2]
+        zipcodeXML = int(addressXML[6].xpath('//long_name/text()')[6])
+        coordXML = [float(locationXML[0].xpath('//lat/text()')[0]), float(locationXML[0].xpath('//lng/text()')[0])]
 
-        #a = addr(building=buildingXML, street=streetXML, city=cityXML, zipcode=zipcodeXML, coord=coordXML)
+        a = addr(building=buildingXML, street=streetXML, city=cityXML, zipcode=zipcodeXML, coord=coordXML)
 
         r = restaurants()
+        r.address = a
+
 
         r.name = self.cleaned_data['name']
         r.restaurant_id = str(restaurants.objects.count() + 1)
@@ -39,7 +41,7 @@ class RestaurantForm(forms.Form):
         print("Dentro del forms")
         salida = False
         valido=False
-        numero = "0"
+        numero = r.restaurant_id
         try:
             x = restaurants.objects.get(restaurant_id=r.restaurant_id)
 
@@ -50,13 +52,16 @@ class RestaurantForm(forms.Form):
             numero=r.restaurant_id
 
 
-        while salida ==False:
+        while salida==False:
+            print("pasa Bucle")
+            print(numero)
             try:
                 x = restaurants.objects.get(restaurant_id=numero)
             except restaurants.DoesNotExist:
-                print("Id no obtenido")
+                print("Id no obtenido2")
                 salida=True
-            numero = str(int(numero)+1)
+            if salida==False:
+                numero = str(int(numero)+1)
 
         #n = 1
         print(numero)
@@ -68,8 +73,15 @@ class RestaurantForm(forms.Form):
         #    n=n+1
 
         if self.cleaned_data['photo']:
-            restaurant_photo = open('static/img/restaurants/' + str(len([name for name in os.listdir('static/img/restaurants/') ])) + '.jpg', 'rb')
-            r.photo.put(restaurant_photo, content_type = 'image/jpeg')
+            #restaurant_photo = open('static/img/restaurants/' + str(len([name for name in os.listdir('static/img/restaurants/') ])) + '.jpg', 'rb')
+            restaurant_photo = str(len([name for name in os.listdir('static/img/restaurants/') ]))+'.jpg'
+            print("che")
+            #restaurant_photo = str(r.restaurant_id)+'.jpg'
+            print(restaurant_photo)
+            #r.photo.put(restaurant_photo, content_type = 'image/jpg')
+            r.photo=restaurant_photo
+            print("pasa")
+        print("pasa2")
 
         if commit:
             r.save()

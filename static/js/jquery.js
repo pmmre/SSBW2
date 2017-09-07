@@ -7,7 +7,8 @@ $(document).ready(function() {
 /*menu = '{{menu}}'
 
 $()*/
-<<<<<<< HEAD
+<!--
+
 /*
 var str1 = "#";
 var str2 = "{{ menu }}";
@@ -23,9 +24,7 @@ $(str1).addClass("active");
   }
 */
 
-
-=======
->>>>>>> 63101479a5bcbdca4b5cbbc5277f51e7b2d4038a
+ -->
 
 $(".Megusta").click(function(){
 	identificado = $(this).attr("id")

@@ -1,6 +1,50 @@
 {% extends "base.html" %}
 {% load static from staticfiles %}
 {% block content %}
+<script>
+$(document).ready(function(){
+    $("#modalBtn").click(function(){
+      $.ajax({
+          url: "{% url 'number_of_restaurants' %}",
+          data: {},
+          type: "GET",
+          dataType: "json",
+          error: function(data) {
+            alert("Ha habido un error");
+            alert(text(data.n))
+          },
+          success: function(data) {
+           $('#numberOfRestaurants').text(data.n);
+           $('#numberOfRestaurantsModal').modal();
+          }
+      })
+    });  $(this).value
+});
+</script>
+
+
+<script>
+$(document).ready(function(){
+    $(".identificador").click(function(){
+      $.ajax({
+          url: "{% url 'latitud_longitud' %}",
+          data: {'eo': $(this).text()},
+          type: "GET",
+          dataType: "json",
+          error: function() {
+            alert("Ha habido un error");
+            alert(text(data.n))
+          },
+          success: function(data) {
+           $('#Coordenadas').text(data.n);
+           $('#LatLongModal').modal();
+          }
+      })
+    });
+});
+</script>
+
+
     <h1>Sección de restaurantes </h1>
 
 
@@ -12,12 +56,18 @@
 
     <p> Que pasa tron!!</p>
 
+    <div class="row">
+  <div class="col-md-12">
+    <button type="button" class="btn btn-primary pull-right" id="modalBtn">Número de restaurantes</button>
+  </div>
+</div>
+
     {% if categories %}
     <ul>
         {% for category in categories %}
         <form action="{% url 'delete' %}" method="get">
         <a href="/restaurantes/restaurante/{{ category.restaurant_id }}">{{ category.name }}  </a>
-        {{category.restaurant_id}}
+        <b class="identificador" value={{category.restaurant_id}}>{{category.restaurant_id}}</b>
 
             <input type='hidden' name='id' value={{category.restaurant_id}}>
             <button type="submit" class="btn btn-primary"> Eliminar </button>
@@ -36,5 +86,49 @@
     {% block contenido %}
 
     {% endblock %}
+
+<div class="modal fade" id="numberOfRestaurantsModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Número de restaurantes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <p>Hay <span id="numberOfRestaurants"></span> restaurantes en el sistema.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="LatLongModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Número de restaurantes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+                <p> Una nueva ventana </p>
+        <p>Hay <span id="Coordenadas"></span> restaurantes en el sistema.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

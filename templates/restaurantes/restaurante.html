@@ -4,14 +4,16 @@
     <h1>{{ category.name }}</h1>
 
 
-{% if resta.photo %}
+{% if category.photo %}
   <p> Es el if </p>
-  {{category.photo}}
-  <img class="restaurant-photo" src="{% static 'img/restaurantes/'|add:photo|add:'.jpg' %}" alt="Foto del restaurante {{ resta.name }}">
+
+  <img class="restaurant-photo" src="/static/img/restaurants/{{category.photo}}" alt="Foto del restaurante 14.jpg {{ category.photo }}">
+
+
 {% else %}
   <p> Es el else </p>
   {{category.photo}}
-  <img class="restaurant-photo" src="{% static 'img/granada.jpg' %}" alt="Foto del restaurante {{ resta.name }}">
+  <img class="restaurant-photo" src="{% static 'img/granada.jpg' %}" alt="Foto del restaurante {{ category.name }}">
 {% endif %}
 
      <p>

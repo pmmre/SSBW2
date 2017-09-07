@@ -41,7 +41,10 @@ INSTALLED_APPS = [
     'restaurantes',
     'registration',
     'rango',
-    'pruebas'
+    'pruebas',
+    'rest_framework',
+    'rest_framework_mongoengine',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -180,4 +183,14 @@ LOGGING = {
             'level': 'DEBUG',
         },
     }
+}
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
