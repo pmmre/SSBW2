@@ -4,6 +4,7 @@ from .forms import RestaurantForm
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from signal import *
 
 import datetime
 import logging
@@ -17,7 +18,7 @@ def handle_uploaded_file(n, f):
 logger = logging.getLogger(__name__)
 
 def index(request):
-    logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la página de inicio")
+    logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la pagina de inicio")
     category_list = restaurants.objects.order_by('-name')[:5]
     #ultimosRestaurants = list(reversed(
     #restaurants.objects[len(restaurants.objects) - 25:len(restaurants.objects)]))
@@ -27,26 +28,26 @@ def index(request):
     #category_list = Category.objects().order_by('-name')
 
     context = {'categories': category_list,
-    "menu": "index"}   # Aquí van la las variables para la plantilla
+    "menu": "index"}   # Aqui van la las variables para la plantilla
 
     return render(request,'restaurantes/index.html', context)
 
 
 def index2(request):
     print("hola2")
-    logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la página de inicio 2")
+    logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la pagina de inicio 2")
     category_list = Category.objects.order_by('-name')[:5]
 
     #category_list = Category.objects().order_by('-name')
     context = {'categories': category_list,
-    "menu": "index"}   # Aquí van la las variables para la plantilla
+    "menu": "index"}   # Aqui van la las variables para la plantilla
 
     return render(request,'restaurantes/index.html', context)
 
 
 def restaurantes(request):
-    logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la página de restaurantes")
-    print(len([name for name in os.listdir('static/img/restaurants/') ]))
+    logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la pagina de restaurantes")
+    #print(len([name for name in os.listdir('static/img/restaurants/') ]))
     print("numero de elementos")
     print(restaurants.objects.count())
     category_list = restaurants.objects.order_by('name')[140:1000]
@@ -55,12 +56,12 @@ def restaurantes(request):
     context = {'categories': category_list,
     "menu": "restaurantes"
     }
-    #context = {}   # Aquí van la las variables para la plantilla
+    #context = {}   # Aqu van la las variables para la plantilla
     return render(request,'restaurantes/restaurantes.html', context)
 
 def restaurante(request,id_rest):
 
-    logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la página del resurante "+id_rest)
+    logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la pagina del resurante "+id_rest)
     print(id_rest)
     r = restaurants.objects.get(restaurant_id=id_rest)
     print("hello")
@@ -78,7 +79,7 @@ def restaurante(request,id_rest):
 # "photo": str(r.restaurant_id),
 
 def restaurant(request, id):
-    logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la página del resurante "+id)
+    logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la pagina del resurante "+id)
     r = restaurants.objects(restaurant_id=id)[0]
     context = {
         "resta": r,
@@ -88,7 +89,7 @@ def restaurant(request, id):
 
 @login_required
 def add(request):
-    logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la página de add restaurante")
+    logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la pagina de add restaurante")
     if request.method == "POST":
         form = RestaurantForm(request.POST, request.FILES)
         if form.is_valid():
@@ -109,7 +110,7 @@ def add(request):
 
 @login_required
 def delete(request):
-    logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la página de inicio")
+    logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la pagina de inicio")
     id_rest = request.GET["id"]
     restaurants.objects.filter(restaurant_id=id_rest).delete()
     print("vete a inicio")
@@ -132,6 +133,10 @@ def latitud_longitud(request):
 
 
     return JsonResponse({'n': r.address.coord})
+
+#views.py
+
+
 
 
 #def index(request):

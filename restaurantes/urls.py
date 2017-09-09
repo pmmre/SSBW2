@@ -1,6 +1,16 @@
 from django.conf.urls import url,include
 from rest_framework_mongoengine import routers
 
+
+from django.conf.urls import url
+from django.conf.urls import include
+#from .views import IndexView
+from rest_framework_mongoengine import routers
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.authtoken.views import obtain_auth_token
+from . import views
+from . import serializers
+
 from . import views
 from . import serializers
 
@@ -20,6 +30,7 @@ urlpatterns = [
   url(r'^api/', include(router.urls, namespace='api')),
   url(r'^number/$', views.number_of_restaurants, name='number_of_restaurants'),
   url(r'^latlong/$', views.latitud_longitud, name='latitud_longitud'),
+  url(r'^obtain-auth-token/$', obtain_auth_token),
 
 
 

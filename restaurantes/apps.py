@@ -1,5 +1,10 @@
+#apps.py
+
 from django.apps import AppConfig
 
+class ApiConfig(AppConfig):
+    name = 'api'
 
-class RestaurantesConfig(AppConfig):
-    name = 'restaurantes'
+
+    def ready(self):
+        from . import signals
