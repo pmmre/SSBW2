@@ -1,20 +1,19 @@
-FROM ubuntu:16.04
+FROM frolvlad/alpine-python3
+# Reference https://docs.docker.com/engine/reference/builder/#label
+LABEL maintainer "pmmr <pmmr@correo.ugr.es>"
 
-#Autor
-MAINTAINER Pablo Martin-Moreno Ruiz <pmmr1990@gmail.com>
+RUN apk update && apk upgrade \
+    && apk add git supervisor gcc linux-headers python3-dev musl-dev freetype-dev libjpeg-turbo-dev lcms2-dev openjpeg-dev tiff-dev libwebp-dev libxml2-dev libxslt-dev zlib-dev \
+    && pip install uwsgi  \
+    && git clone https://github.com/fblupi/restaurantator.git /home/restaurantator  \
+    && cd /home/restaurantator && pip install -r requirements.txt  \
+    && apk del git gcc linux-headers
 
-#Actualizar Sistema Base
-RUN sudo apt-get -y update & sudo apt-get -y upgrade
+EXPOSE 8000
 
+COPY models.py /home/restaurantator/restaurantes/
+COPY settings.py /home/restaurantator/sitio_web/
+COPY app.ini /home/restaurantator/uwsgi/
+COPY supervisord.conf /etc/
 
-# Instalar Python 
-RUN sudo apt-get install -y python-setuptools
-RUN sudo apt-get -y install python-dev
-RUN sudo apt-get -y install build-essential
-RUN sudo apt-get -y install python-psycopg2
-RUN sudo apt-get -y install libpq-dev
-RUN sudo easy_install pip
-RUN sudo pip install --upgrade pip
-RUN sudo pip install Django
-RUN sudo apt-get -y install mongoDB
-
+CMD ["supervisord", "-n"]
