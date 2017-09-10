@@ -5,7 +5,7 @@ LABEL maintainer "pmmr <pmmr@correo.ugr.es>"
 RUN apk update && apk upgrade \
     && apk add git supervisor gcc linux-headers python3-dev musl-dev freetype-dev libjpeg-turbo-dev lcms2-dev openjpeg-dev tiff-dev libwebp-dev libxml2-dev libxslt-dev zlib-dev \
     && pip install uwsgi  \
-    && git clone https://github.com/fblupi/restaurantator.git /home/restaurantator  \
+    && git clone https://github.com/pmmre/SSBW.git /home/restaurantator  \
     && cd /home/restaurantator && pip install -r requirements.txt  \
     && apk del git gcc linux-headers
 
