@@ -4,7 +4,8 @@ from django.template.defaultfilters import slugify
 import os, os.path
 
 # Conectarse a la BD
-connect('test', host='192.168.127.133', port=27017)
+#connect('test', host='192.168.127.133', port=27017)
+connect('test', host='127.0.0.1', port=27017)
 
 
 class addr(EmbeddedDocument):
