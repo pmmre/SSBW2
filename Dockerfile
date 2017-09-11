@@ -1,19 +1,27 @@
-FROM frolvlad/alpine-python3
-# Reference https://docs.docker.com/engine/reference/builder/#label
-LABEL maintainer "pmmr <pmmr@correo.ugr.es>"
+FROM ubuntu:latest
 
-RUN apk update && apk upgrade \
-    && apk add git supervisor gcc linux-headers python3-dev musl-dev freetype-dev libjpeg-turbo-dev lcms2-dev openjpeg-dev tiff-dev libwebp-dev libxml2-dev libxslt-dev zlib-dev \
-    && pip install uwsgi  \
-    && git clone https://github.com/pmmre/SSBW.git /home/restaurantator  \
-    && cd /home/restaurantator && pip install -r requirements.txt  \
-    && apk del git gcc linux-headers
+#Autor
+MAINTAINER Pablo Martin-Moreno Ruiz <pmmr1990@gmail.com>
 
-EXPOSE 8000
+#Actualizar Sistema Base
+RUN sudo apt-get -y update
 
-COPY models.py /home/restaurantator/restaurantes/
-COPY settings.py /home/restaurantator/sitio_web/
-COPY app.ini /home/restaurantator/uwsgi/
-COPY supervisord.conf /etc/
+#Descargar aplicacion
+RUN sudo apt-get install -y git
+RUN sudo git clone https://github.com/pmmre/SSBW2.git
 
-CMD ["supervisord", "-n"]
+
+# Instalar Python y PostgreSQL
+RUN sudo apt-get install -y python-setuptools
+RUN sudo apt-get -y install python-dev
+RUN sudo apt-get -y install build-essential
+RUN sudo apt-get -y install python-psycopg2
+RUN sudo apt-get -y install libpq-dev
+RUN sudo easy_install pip
+RUN sudo pip install --upgrade pip
+
+#Instalar la app
+RUN cd SSBW2 && pip install -r requirements.txt
+
+#Migraciones
+RUN cd SSBW2 && python manage.py syncdb --noinput
