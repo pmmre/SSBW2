@@ -4,7 +4,7 @@ FROM ubuntu:latest
 MAINTAINER Pablo Martin-Moreno Ruiz <pmmr1990@gmail.com>
 
 #Actualizar Sistema Base
-RUN sudo apt-get -y update
+RUN apt-get -y update
 
 #Descargar aplicacion
 RUN sudo apt-get install -y git
