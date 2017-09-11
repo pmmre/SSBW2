@@ -21,7 +21,7 @@ RUN easy_install pip
 RUN pip install --upgrade pip
 
 #Instalar la app
-RUN cd SSBW2 && pip install -r requirements.txt
+RUN cd SSBW && pip install -r requirements.txt
 
 #Migraciones
-RUN cd SSBW2 && python manage.py syncdb --noinput
+RUN cd SSBW && python manage.py syncdb --noinput
